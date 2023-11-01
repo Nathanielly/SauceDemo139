@@ -1,6 +1,7 @@
 using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using TechTalk.SpecFlow;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
@@ -34,64 +35,70 @@ namespace MyNamespace
             driver.Quit(); //encerrar o selenium        
         }
 
-        [Given(@"que acesso a página inicial do site")]
+        [Given(@"que acesso a pagina inicial do site")]
         public void DadoQueAcessoAPaginaInicialDoSite()
         {
-            _scenarioContext.Pending();
+            driver.Navigate().GoToUrl("https://www.saucedemo.com/");
         }
 
         [When(@"preencho o usuario como ""(.*)""")]
-        public void QuandoPreenchoOUsuarioComo(string p0)
+        public void QuandoPreenchoOUsuarioComo(string username)
         {
-            _scenarioContext.Pending();
+            driver.FindElement(By.Id("user-name")).SendKeys(username);
         }
 
-        [When(@"a senha ""(.*)""")]
-        public void QuandoASenha(string p0)
+        [When(@"a senha ""(.*)"" e clico no botao login")]
+        public void QuandoASenha(string password)
         {
-            _scenarioContext.Pending();
+            driver.FindElement(By.Id("password")).SendKeys(password);
+            driver.FindElement(By.Id("login-button")).Click();
         }
 
-        [When(@"clico no botão ""(.*)""")]
-        public void QuandoClicoNoBotao(string login0)
+        [Then(@"exibe ""(.*)"" no titulo da Selecao")]
+        public void EntaoExibeNoTituloDaSelecao(string title)
         {
-            _scenarioContext.Pending();
+            //espera explicita pelo elemento span.title ser carregado na página
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromMilliseconds(3000));
+            wait.Until(d => driver.FindElement(By.CssSelector("span.title")).Displayed);
+            //Assert.That(driver.FindElement(By.CssSelector("span.title")).Text, Is.EqualTo(title));
         }
 
         [When(@"adiciono o produto ""(.*)"" ao carrinho")]
-        public void QuandoAdicionoOProdutoAoCarrinho(string p0)
+        public void QuandoAdicionoOProdutoAoCarrinho(string product)
         {
-            _scenarioContext.Pending();
+            //o nome do produto vem do arquivo .feature = Sauce Labs Backpack
+            //o texto vem em maiusculo e o id em minusculo com hifens
+            //ToLower transforma tudo para minusculo
+
+           string productSelector = "add-to-cart-" + product.ToLower().Replace(" ","-");
+           driver.FindElement(By.Id(productSelector)).Click();
+
+           Console.WriteLine($"Seletor de produto = {productSelector}");
+
         }
 
         [When(@"clico no ícone do carrinho de compras")]
         public void QuandoClicoNoIconeDoCarrinhoDeCompras()
         {
-            _scenarioContext.Pending();
+           driver.FindElement(By.CssSelector("a.shopping_cart_link")).Click();
         }
 
-        [Then(@"exibe ""(.*)"" no titulo da Selecao")]
-        public void EntaoExibeNoTituloDaSelecao(string products0)
+        [Then(@"exibe a pagina do carrinho com a quantidade ""(.*)""")]
+        public void EntaoExibeAPaginaDoCarrinhoComQuantidadeComo(string quantity)
         {
-            _scenarioContext.Pending();
-        }
-
-        [Then(@"exibe a pagina do carrinho com quantidade como ""(.*)""")]
-        public void EntaoExibeAPaginaDoCarrinhoComQuantidadeComo(string p0)
-        {
-            _scenarioContext.Pending();
+            Assert.That(driver.FindElement(By.CssSelector("div.cart_quantity")).Text, Is.EqualTo(quantity));
         }
 
         [Then(@"nome do produto ""(.*)""")]
-        public void EntaoNomeDoProduto(string p0)
+        public void EntaoNomeDoProduto(string product)
         {
-            _scenarioContext.Pending();
+            Assert.That(driver.FindElement(By.ClassName("inventory_item_name")).Text, Is.EqualTo(product));
         }
 
         [Then(@"o preco como ""(.*)""")]
-        public void EntaoOPrecoComo(string p0)
+        public void EntaoOPrecoComo(string price)
         {
-            _scenarioContext.Pending();
+            Assert.That(driver.FindElement(By.ClassName("inventory_item_price")).Text, Is.EqualTo(price));
         }
     }
 }
