@@ -122,6 +122,62 @@ namespace SauceDemo139.Features
             }
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Selecao de produto com sucesso DDT")]
+        [NUnit.Framework.TestCaseAttribute("\"standard_user\"", "\"secret_sauce\"", "\"Products\"", "\"Sauce Labs Backpack\"", "\"1\"", "\"$29.99\"", null)]
+        [NUnit.Framework.TestCaseAttribute("\"visual_user\"", "\"secret_sauce\"", "\"Products\"", "\"Sauce Labs Bike Light\"", "\"1\"", "\"$9.99\"", null)]
+        public void SelecaoDeProdutoComSucessoDDT(string usuario, string senha, string tituloSecao, string produto, string quantidade, string preco, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("usuario", usuario);
+            argumentsOfScenario.Add("senha", senha);
+            argumentsOfScenario.Add("tituloSecao", tituloSecao);
+            argumentsOfScenario.Add("Produto", produto);
+            argumentsOfScenario.Add("Quantidade", quantidade);
+            argumentsOfScenario.Add("Preco", preco);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Selecao de produto com sucesso DDT", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 16
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 17
+        testRunner.Given("que acesso a pagina inicial do site", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+#line hidden
+#line 18
+        testRunner.When(string.Format("preencho o usuario como {0}", usuario), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line hidden
+#line 19
+        testRunner.And(string.Format("a senha {0} e clico no botao login", senha), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+#line 20
+        testRunner.Then(string.Format("exibe {0} no titulo da Selecao", tituloSecao), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+#line 21
+        testRunner.When(string.Format("adiciono o produto {0} ao carrinho", produto), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line hidden
+#line 22
+        testRunner.And("clico no ícone do carrinho de compras", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+#line 23
+        testRunner.Then(string.Format("exibe a pagina do carrinho com a quantidade {0}", quantidade), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+#line 24
+        testRunner.And(string.Format("nome do produto {0}", produto), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+#line 25
+        testRunner.And(string.Format("o preco como {0}", preco), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore
